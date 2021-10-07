@@ -18,20 +18,36 @@ VratitMince <- function(M, mince){
 
 # Nejcokoladovejsi cesta
 
-Cokolada <- function(M,r,s){
-  # M reprezentuje labyrint, r je radek a s sloupec
+CokoladaRek <- function(M,r,s){
+  # M reprezentuje labyrint, r je radek a s sloupec (Start pozice mysky)
   # Priklad matrix(c(3,0,0,0,1,4,0,0,5,3,0,0,1,2,6,7), nrow = 4, ncol = 4, byrow = TRUE)
   
-  # Rekurzivni zpusob
+  # Rekurzivni zpusob reseni
   if (r == nrow(M)){
     return(M[r,s])
   }
   else{
     C <- M[r,s]
-    Cdolu <- Cokolada(M,r+1,s)
-    Csikmo <- Cokolada(M,r+1,s+1)
+    Cdolu <- CokoladaRek(M,r+1,s)
+    Csikmo <- CokoladaRek(M,r+1,s+1)
     return(max(Cdolu,Csikmo)+C)
   }
 }
+  
+  # Iterativni zpusob reseni
+CokoladaIt <- function(M){
+  # M reprezentuje labyrint, r a s startovni pozice mysky
+  s <- dim(M)
+  k1 <- seq(from=s[1]-1, to=1, by=-1)
+  for (r in k1){
+    k2 <- seq(from=r, to=1, by=-1)
+    for (s in k2){
+      Cdolu <- M[r+1,s]+M[r,s]
+      Csikmo <- M[r+1,s+1]+M[r,s]
+      M[r,s] <- max(c(Cdolu, Csikmo))
+    }
+  }
+  return(M[1,1])
+  }
 
 # Hanojske veze
