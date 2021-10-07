@@ -51,3 +51,14 @@ CokoladaIt <- function(M){
   }
 
 # Hanojske veze
+HanojskaVez <- function(n,zkoliku,nakolik){
+  if (n==1){
+    print(paste(unlist(c('Pøesuò disk z kolíku ', as.character(zkoliku), ' na kolík ', as.character(nakolik), '.')), collapse = ''))
+  }
+  else{
+    volnyKolik <- 6 - zkoliku - nakolik
+    HanojskaVez(n-1,zkoliku,volnyKolik)
+    print(paste(unlist(c('Pøesuò disk z kolíku ', as.character(zkoliku), ' na kolík ', as.character(nakolik), '.')), collapse = ''))
+    HanojskaVez(n-1,volnyKolik,nakolik)
+  }
+}
